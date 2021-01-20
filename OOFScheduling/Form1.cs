@@ -607,7 +607,7 @@ namespace OOFScheduling
             OOFSponder.Logger.Info("previousDayPeriodEnd = " + previousDayPeriodEnd);
 
             DateTime nextDayPeriodStart = OOFData.Instance.nextOOFPeriod.StartTime;
-            OOFSponder.Logger.Info("nextDayPeriodState = " + nextDayPeriodStart);
+            OOFSponder.Logger.Info("nextDayPeriodStart = " + nextDayPeriodStart);
 
             DateTime nextDayPeriodEnd = OOFData.Instance.nextOOFPeriod.EndTime;
             OOFSponder.Logger.Info("nextDayPeriodEnd =" + nextDayPeriodEnd);
@@ -641,8 +641,8 @@ namespace OOFScheduling
                 }
                 else
                 {
-                    StartTime = nextDayPeriodStart;
-                    EndTime = nextDayPeriodEnd;
+                    StartTime = currentWorkingTime.EndTime;
+                    EndTime = nextDayPeriodStart;
                 }
             }
 
