@@ -323,7 +323,7 @@ namespace OOFScheduling
                 inner = inner.InnerException;
             }
 
-            OOFSponder.Logger.Error(new Exception(_error, ex));
+            OOFSponder.Logger.Error(new Exception(verboseError, ex));
             return _error;
         }
     }
