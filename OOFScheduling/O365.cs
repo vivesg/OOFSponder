@@ -61,11 +61,15 @@ namespace OOFScheduling
                 //return PublicClientApp.Users.Any();
 
                 //MSAL 3.0
-                Task<IEnumerable<IAccount>> accountTask = PublicClientApp.GetAccountsAsync();
-                accountTask.Wait(10000);
-
                 IAccount account = null;
-                try { account = accountTask.Result.FirstOrDefault(p => p.Username.ToLower() == DefaultUserUPN.ToLower()); } catch (Exception) { }
+                if (PublicClientApp != null)
+                {
+                    Task<IEnumerable<IAccount>> accountTask = PublicClientApp.GetAccountsAsync();
+                    accountTask.Wait(10000);
+
+                    try { account = accountTask.Result.FirstOrDefault(p => p.Username.ToLower() == DefaultUserUPN.ToLower()); } catch (Exception) { }
+
+                }
 
                 return (account != null && account.Username.ToLower() == DefaultUserUPN.ToLower());
             }
@@ -74,7 +78,7 @@ namespace OOFScheduling
         /// <summary>
         /// Call AcquireTokenAsync - to acquire a token requiring user to sign-in
         /// </summary>
-        internal async static Task<bool> MSALWork(AADAction action)
+        internal async static Task<bool> MSALWork()
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
@@ -86,14 +90,17 @@ namespace OOFScheduling
             OOFSponder.Logger.Info("Inside critical section for auth code");
 
             OOFSponder.Logger.Info("Attempting to build PublicClientApp with multitenant endpoint");
-            lock (pcaInitLock)
+            if (PublicClientApp == null)
             {
-                PublicClientApp = PublicClientApplicationBuilder.Create(ClientId)
-                    .WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient")
-                    .WithAuthority(logonUrl)
-                    .Build();
+                lock (pcaInitLock)
+                {
+                    PublicClientApp = PublicClientApplicationBuilder.Create(ClientId)
+                        .WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient")
+                        .WithAuthority(logonUrl)
+                        .Build();
 
-                MSALTokenCacheHelper.EnableSerialization(PublicClientApp.UserTokenCache);
+                    MSALTokenCacheHelper.EnableSerialization(PublicClientApp.UserTokenCache);
+                }
             }
 
             //grab the logged in user UPN so we can decide whether or not to force the prompt
@@ -138,42 +145,49 @@ namespace OOFScheduling
                 }
                 catch (Exception ex)
                 {
-                    if (ex is MsalUiRequiredException || ex.InnerException is MsalUiRequiredException ||
-                        ex is MsalClientException || ex.InnerException is MsalClientException ||
-                        ex is MsalServiceException || ex.InnerException is MsalServiceException)
-                    // MSAL service or client exception here is most likely down to need for UI
-                    // even if it is not MsalUiRequiredException
+                    if (ex.InnerException.Message != "User canceled authentication. ")
                     {
-                        //try
-                        //{
-                        //    if (!UPN.ToLower().EndsWith("@microsoft.com"))
-                        //        throw new Exception("Skip IWA for outsourcer logon");
-                        //    Task<AuthenticationResult> authIWATask = PublicClientApp.AcquireTokenByIntegratedWindowsAuth(scopes).ExecuteAsync();
-                        //    authIWATask.Wait(10000);
-                        //    authResult = authIWATask.Result;
-                        //}
-                        //catch (Exception ex1)
-                        //{
-                        try
+                        if (ex is MsalUiRequiredException || ex.InnerException is MsalUiRequiredException ||
+                                ex is MsalClientException || ex.InnerException is MsalClientException ||
+                                ex is MsalServiceException || ex.InnerException is MsalServiceException)
+                        // MSAL service or client exception here is most likely down to need for UI
+                        // even if it is not MsalUiRequiredException
                         {
-                            Task<AuthenticationResult> authUITask = PublicClientApp.AcquireTokenInteractive(_scopes)
-                                .WithPrompt(Prompt.NoPrompt)
-                                .WithLoginHint(DefaultUserUPN).ExecuteAsync();
-                            authUITask.Wait(10000);
-                            authResult = authUITask.Result;
-                            _result = true;
+                            //try
+                            //{
+                            //    if (!UPN.ToLower().EndsWith("@microsoft.com"))
+                            //        throw new Exception("Skip IWA for outsourcer logon");
+                            //    Task<AuthenticationResult> authIWATask = PublicClientApp.AcquireTokenByIntegratedWindowsAuth(scopes).ExecuteAsync();
+                            //    authIWATask.Wait(10000);
+                            //    authResult = authIWATask.Result;
+                            //}
+                            //catch (Exception ex1)
+                            //{
+                            try
+                            {
+                                Task<AuthenticationResult> authUITask = PublicClientApp.AcquireTokenInteractive(_scopes)
+                                    .WithPrompt(Prompt.NoPrompt)
+                                    .WithLoginHint(DefaultUserUPN).ExecuteAsync();
+                                authUITask.Wait(10000);
+                                authResult = authUITask.Result;
+                                _result = true;
+                            }
+                            catch (Exception ex2)
+                            {
+                                string _error2 = "GetTokenFromAAD: Failed to get interactive auth token: " + ExceptionChain(ex2);
+                                OOFSponder.Logger.Error(new Exception(_error2, ex2));
+                            }
+                            //}
                         }
-                        catch (Exception ex2)
+                        else
                         {
-                            string _error2 = "GetTokenFromAAD: Failed to get interactive auth token: " + ExceptionChain(ex2);
-                            OOFSponder.Logger.Error(new Exception(_error2, ex2));
+                            string _error = "GetTokenFromAAD: UI might be required for MSAL logon: " + ExceptionChain(ex);
+                            OOFSponder.Logger.Error(new Exception(_error));
                         }
-                        //}
                     }
                     else
                     {
-                        string _error = "GetTokenFromAAD: UI might be required for MSAL logon: " + ExceptionChain(ex);
-                        OOFSponder.Logger.Error(new Exception(_error));
+                        OOFSponder.Logger.Warning("User canceled authentication window");
                     }
                 }
                 //}
@@ -211,7 +225,7 @@ namespace OOFScheduling
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             //check and refresh token if necessary
-            await O365.MSALWork(O365.AADAction.SignIn);
+            await O365.MSALWork();
 
             if (authResult != null)
             {
@@ -250,7 +264,7 @@ namespace OOFScheduling
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             //check and refresh token if necessary
-            await O365.MSALWork(O365.AADAction.SignIn);
+            await O365.MSALWork();
 
             var httpClient = new System.Net.Http.HttpClient();
             System.Net.Http.HttpMethod method = new System.Net.Http.HttpMethod("PATCH");

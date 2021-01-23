@@ -104,8 +104,9 @@ namespace OOFScheduling
 
 
             //prep for async work
-            System.Threading.Tasks.Task AuthTask = null;
-            AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
+            //System.Threading.Tasks.Task AuthTask = null;
+            //AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(); }));
+            ////AuthTask.Wait(10000);
 
 #if DEBUGFLOW
             MessageBox.Show("Attach now", "OOFSponder", MessageBoxButtons.OK);
@@ -191,12 +192,6 @@ namespace OOFScheduling
             //set up handlers to persist OOF messages
             htmlEditorControl1.Validated += htmlEditorValidated;
             htmlEditorControl2.Validated += htmlEditorValidated;
-
-            //wait on async auth stuff if not null
-            if (AuthTask != null)
-            {
-                AuthTask.Wait();
-            }
 
             //trigger a check on current status
             System.Threading.Tasks.Task.Run(() => RunSetOofO365());
@@ -326,7 +321,7 @@ namespace OOFScheduling
                     OOFSponder.Logger.Error("Not logged in when trying to Save Settings. Giving them one more try.");
 
                     System.Threading.Tasks.Task AuthTask = null;
-                    AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
+                    AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(); }));
                     AuthTask.Wait(10000);
 
                     //if still not logged in, bail
