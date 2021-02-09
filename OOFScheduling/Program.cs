@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 
-namespace OOFScheduling
+namespace OOFSchedulingfork
 {
     static class Program
     {

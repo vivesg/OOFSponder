@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOFSponder", "OOFScheduling\OOFSponder.csproj", "{134672C0-60F8-42D8-BC10-B9E69F66A1F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOFSponderfork", "OOFScheduling\OOFSponderfork.csproj", "{134672C0-60F8-42D8-BC10-B9E69F66A1F6}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5873DE0F-6853-4C8E-91A4-7A6861069A9A} = {5873DE0F-6853-4C8E-91A4-7A6861069A9A}
 	EndProjectSection

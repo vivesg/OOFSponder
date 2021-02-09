@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-namespace OOFScheduling
+namespace OOFSchedulingfork
 {
     public class OOFData
     {
@@ -145,14 +145,14 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info("Reading settings");
 
-            instance.PermaOOFDate = OOFScheduling.Properties.Settings.Default.PermaOOFDate;
-            instance.WorkingHours = OOFScheduling.Properties.Settings.Default.workingHours == baseValue ? string.Empty : Properties.Settings.Default.workingHours;
-            instance.PrimaryOOFExternalMessage = OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.PrimaryOOFExternal;
-            instance.PrimaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.PrimaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.PrimaryOOFInternal;
-            instance.SecondaryOOFExternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFExternal;
-            instance.SecondaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFInternal;
-            instance.IsOnCallModeOn = OOFScheduling.Properties.Settings.Default.enableOnCallMode;
-            instance.useAlternativeBackend = OOFScheduling.Properties.Settings.Default.alternativeBackend;
+            instance.PermaOOFDate = OOFSchedulingfork.Properties.Settings.Default.PermaOOFDate;
+            instance.WorkingHours = OOFSchedulingfork.Properties.Settings.Default.workingHours == baseValue ? string.Empty : Properties.Settings.Default.workingHours;
+            instance.PrimaryOOFExternalMessage = OOFSchedulingfork.Properties.Settings.Default.PrimaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.PrimaryOOFExternal;
+            instance.PrimaryOOFInternalMessage = OOFSchedulingfork.Properties.Settings.Default.PrimaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.PrimaryOOFInternal;
+            instance.SecondaryOOFExternalMessage = OOFSchedulingfork.Properties.Settings.Default.SecondaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFExternal;
+            instance.SecondaryOOFInternalMessage = OOFSchedulingfork.Properties.Settings.Default.SecondaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFInternal;
+            instance.IsOnCallModeOn = OOFSchedulingfork.Properties.Settings.Default.enableOnCallMode;
+            instance.useAlternativeBackend = OOFSchedulingfork.Properties.Settings.Default.alternativeBackend;
 
             OOFSponder.Logger.Info("Successfully read settings");
         }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OOFScheduling.Properties {
+namespace OOFSchedulingfork.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -46,8 +46,6 @@ namespace OOFScheduling.Properties {
                 this["IsPermaOOFOn"] = value;
             }
         }
-
-
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -123,7 +121,7 @@ namespace OOFScheduling.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool alternativeBackend {
             get {
                 return ((bool)(this["alternativeBackend"]));

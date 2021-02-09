@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
-namespace OOFScheduling
+namespace OOFSchedulingfork
 {
     // http://sanity-free.org/143/csharp_dotnet_single_instance_application.html
     internal static class NativeMethods

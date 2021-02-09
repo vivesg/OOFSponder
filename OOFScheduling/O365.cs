@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace OOFScheduling
+namespace OOFSchedulingfork
 {
     internal class O365
     {

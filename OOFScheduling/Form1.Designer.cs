@@ -1,4 +1,4 @@
-﻿namespace OOFScheduling
+﻿namespace OOFSchedulingfork
 {
     partial class Form1
     {
@@ -84,12 +84,12 @@
             this.label9 = new System.Windows.Forms.Label();
             this.emailAddressTB = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.btnPermaOOF = new System.Windows.Forms.Button();
-            this.dtPermaOOF = new System.Windows.Forms.DateTimePicker();
             this.radPrimary = new System.Windows.Forms.RadioButton();
             this.radSecondary = new System.Windows.Forms.RadioButton();
             this.htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
             this.htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
+            this.dtPermaOOF = new System.Windows.Forms.DateTimePicker();
+            this.btnPermaOOF = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -100,7 +100,7 @@
             this.notifyIcon1.BalloonTipText = "OOFScheduling will make sure your OOF message is set for you in the background!";
             this.notifyIcon1.BalloonTipTitle = "OOFScheduling is still working";
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "OOFScheduling";
+            this.notifyIcon1.Text = "OOFSchedulingfork";
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
@@ -534,20 +534,21 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 19);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 23);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.toolStripStatusLabel2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(122, 19);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(131, 19);
             this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
             // 
             // lblBuild
             // 
             this.lblBuild.Name = "lblBuild";
-            this.lblBuild.Size = new System.Drawing.Size(78, 19);
+            this.lblBuild.Size = new System.Drawing.Size(78, 23);
             this.lblBuild.Text = "BuildNumber";
             // 
             // passwordConfirmTB
@@ -606,27 +607,6 @@
             this.label8.Text = "Email:";
             this.label8.Visible = false;
             // 
-            // btnPermaOOF
-            // 
-            this.btnPermaOOF.Location = new System.Drawing.Point(308, 719);
-            this.btnPermaOOF.Margin = new System.Windows.Forms.Padding(2);
-            this.btnPermaOOF.Name = "btnPermaOOF";
-            this.btnPermaOOF.Size = new System.Drawing.Size(130, 23);
-            this.btnPermaOOF.TabIndex = 54;
-            this.btnPermaOOF.Tag = "Enable";
-            this.btnPermaOOF.Text = "Go OOF now until:";
-            this.btnPermaOOF.UseVisualStyleBackColor = true;
-            this.btnPermaOOF.Click += new System.EventHandler(this.btnPermaOOF_Click);
-            // 
-            // dtPermaOOF
-            // 
-            this.dtPermaOOF.Enabled = false;
-            this.dtPermaOOF.Location = new System.Drawing.Point(438, 721);
-            this.dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
-            this.dtPermaOOF.Name = "dtPermaOOF";
-            this.dtPermaOOF.Size = new System.Drawing.Size(185, 20);
-            this.dtPermaOOF.TabIndex = 55;
-            // 
             // radPrimary
             // 
             this.radPrimary.AutoSize = true;
@@ -665,6 +645,29 @@
             this.htmlEditorControl1.Name = "htmlEditorControl1";
             this.htmlEditorControl1.Size = new System.Drawing.Size(667, 277);
             this.htmlEditorControl1.TabIndex = 31;
+            // 
+            // dtPermaOOF
+            // 
+            this.dtPermaOOF.Enabled = false;
+            this.dtPermaOOF.Location = new System.Drawing.Point(438, 721);
+            this.dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
+            this.dtPermaOOF.Name = "dtPermaOOF";
+            this.dtPermaOOF.Size = new System.Drawing.Size(185, 20);
+            this.dtPermaOOF.TabIndex = 55;
+            this.dtPermaOOF.Visible = false;
+            // 
+            // btnPermaOOF
+            // 
+            this.btnPermaOOF.Location = new System.Drawing.Point(308, 719);
+            this.btnPermaOOF.Margin = new System.Windows.Forms.Padding(2);
+            this.btnPermaOOF.Name = "btnPermaOOF";
+            this.btnPermaOOF.Size = new System.Drawing.Size(130, 23);
+            this.btnPermaOOF.TabIndex = 54;
+            this.btnPermaOOF.Tag = "Enable";
+            this.btnPermaOOF.Text = "Go OOF now until:";
+            this.btnPermaOOF.UseVisualStyleBackColor = true;
+            this.btnPermaOOF.Visible = false;
+            this.btnPermaOOF.Click += new System.EventHandler(this.btnPermaOOF_Click);
             // 
             // Form1
             // 
@@ -718,12 +721,14 @@
             this.Controls.Add(this.radPrimary);
             this.Controls.Add(this.radSecondary);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(695, 782);
             this.MinimumSize = new System.Drawing.Size(585, 367);
             this.Name = "Form1";
-            this.Text = "OOFSponder";
+            this.Text = "OOFSponderfork https://github.com/vivesg/OOFSponder/  from EvanBasalik/OOFSponder" +
+    "";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);
@@ -791,8 +796,6 @@
         private System.Windows.Forms.TextBox emailAddressTB;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ToolStripStatusLabel lblBuild;
-        private System.Windows.Forms.Button btnPermaOOF;
-        private System.Windows.Forms.DateTimePicker dtPermaOOF;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem primaryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem secondaryToolStripMenuItem;
@@ -802,6 +805,8 @@
         private System.Windows.Forms.ToolStripMenuItem showLogsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bETAEnableNewOOFToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bETAEnableAlternativeBackendMethodToolStripMenuItem;
+        private System.Windows.Forms.DateTimePicker dtPermaOOF;
+        private System.Windows.Forms.Button btnPermaOOF;
     }
 }
 

@@ -1,5 +1,5 @@
 ﻿
-namespace OOFScheduling
+namespace OOFSchedulingfork
 {
     partial class WhatsNew
     {

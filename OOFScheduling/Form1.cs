@@ -8,7 +8,7 @@ using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
 
-namespace OOFScheduling
+namespace OOFSchedulingfork
 {
     public partial class Form1 : Form
     {
@@ -70,9 +70,9 @@ namespace OOFScheduling
 
             //Path to launch shortcut
             string startPath = Environment.GetFolderPath(Environment.SpecialFolder.Programs)
-                               + @"\Microsoft\OOFSponder.appref-ms";
+                               + @"\Microsoft\OOFSponderfork.appref-ms";
 
-            rkApp.SetValue("OOFSponder", startPath);
+            rkApp.SetValue("OOFSponderfork", startPath);
             #endregion
             #region Tray Menu Initialize
             // Create a simple tray menu with only one item.
@@ -168,7 +168,7 @@ namespace OOFScheduling
 
             bool haveNecessaryData = false;
 
-            bETAEnableNewOOFToolStripMenuItem.Checked = OOFData.Instance.useAlternativeBackend;
+            bETAEnableAlternativeBackendMethodToolStripMenuItem.Checked = OOFData.Instance.useAlternativeBackend;
             //we need the OOF messages and working hours
             if (OOFData.Instance.PrimaryOOFExternalMessage != "" && OOFData.Instance.PrimaryOOFInternalMessage != ""
                 && OOFData.Instance.WorkingHours != "")
@@ -202,7 +202,7 @@ namespace OOFScheduling
 
             //trigger a check on current status
 
-            System.Threading.Tasks.Task.Run(() => RunSetOofO365());
+         //   System.Threading.Tasks.Task.Run(() => RunSetOofO365());
 
             radPrimary.CheckedChanged += new System.EventHandler(radPrimary_CheckedChanged);
             fileToolStripMenuItem.DropDownOpening += fileToolStripMenuItem_DropDownOpening;
@@ -229,14 +229,14 @@ namespace OOFScheduling
             //prep for async work
             System.Threading.Tasks.Task AuthTask = null;
 
-            if (signoutToolStripMenuItem.Tag.ToString() == "LoggedIn")
-            {
-                AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignOut); }));
-            }
-            else
-            {
-                AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
-            }
+            //if (signoutToolStripMenuItem.Tag.ToString() == "LoggedIn")
+            //{
+            //    AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignOut); }));
+            //}
+            //else
+            //{
+            //    AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
+            //}
 
             //wait on async auth stuff if not null
             if (AuthTask != null)
@@ -455,7 +455,8 @@ namespace OOFScheduling
                         MessageBox.Show("Please Select your Microsoft.com User", "Select Tenant", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         int resp2 = await O365.PatchWithPowershell(localOOF, "72f988bf-86f1-41af-91ab-2d7cd011db47");
                         if (resp + resp2 == 400){
-                            UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set - Start: " + StartTime + " - End: " + EndTime);
+                            UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + "SUCCESS");
+                            OOFSponderInsights.Track("Successfully set OOF both accounts");
                             return true;
                         }
                         return false;

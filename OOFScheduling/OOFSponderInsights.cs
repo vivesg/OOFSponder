@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace OOFScheduling
+namespace OOFSchedulingfork
 {
     internal static class OOFSponderInsights
     {
